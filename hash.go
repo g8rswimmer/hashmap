@@ -9,6 +9,7 @@ type entry struct {
 
 type entries []entry
 
+// HashMap is the structure to store and retrive key value pairs
 type HashMap struct {
 	hash  Hasher
 	equal Equaler
@@ -16,6 +17,7 @@ type HashMap struct {
 	size  uint64
 }
 
+// NewHashMap creates a new hash map
 func NewHashMap(size uint64, hash Hasher, equal Equaler) *HashMap {
 	return &HashMap{
 		hash:  hash,
@@ -25,6 +27,8 @@ func NewHashMap(size uint64, hash Hasher, equal Equaler) *HashMap {
 	}
 }
 
+// Get will return an value from a key.  If the hash entry can not be found
+// or the entry is not present, then an error is returned.
 func (h *HashMap) Get(k interface{}) (interface{}, error) {
 	hash, err := h.hash.Hash(k)
 	if err != nil {
@@ -49,6 +53,7 @@ func (h *HashMap) Get(k interface{}) (interface{}, error) {
 	return nil, errors.New("hash map: key was not found in list")
 }
 
+// Put will place an key value pair into the hash map
 func (h *HashMap) Put(k, v interface{}) error {
 	hash, err := h.hash.Hash(k)
 	if err != nil {
