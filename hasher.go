@@ -6,7 +6,7 @@ import (
 
 // Hasher is an interface that can be used to create a 64 bit hash
 type Hasher interface {
-	Hash(interface{}) (int, error)
+	Hash(interface{}) (uint64, error)
 }
 
 // DefaultHasher can be used to create hashes for data types,
