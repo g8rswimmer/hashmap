@@ -57,7 +57,7 @@ BenchmarkDefaultIntHashMapPut1000-8      	    2000	   1162005 ns/op
 
 BenchmarkDefaultIntHashMapGet-8          	 1000000	      1529 ns/op	   
 ```
-### Default String Hasger and Equaler
+### Default String Hasher and Equaler
 ```
 goos: darwin
 goarch: amd64
