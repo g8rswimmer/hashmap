@@ -2,6 +2,7 @@ package hashmap
 
 import (
 	"fmt"
+	"math"
 )
 
 // Hasher is an interface that can be used to create a 64 bit hash
@@ -88,10 +89,10 @@ func (d defaultHasher) floatHash(obj interface{}) (uint64, error) {
 	switch obj.(type) {
 	case float32:
 		num, _ := obj.(float32)
-		return uint64(num), nil
+		return uint64(math.Float32bits(num)), nil
 	case float64:
 		num, _ := obj.(float64)
-		return uint64(num), nil
+		return math.Float64bits(num), nil
 	default:
 		return 0, fmt.Errorf("hasher int: type not supported %T", obj)
 	}
