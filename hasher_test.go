@@ -215,7 +215,7 @@ func Test_defaultHasher_floatHash(t *testing.T) {
 			args: args{
 				obj: float32(100.4343),
 			},
-			want:    100,
+			want:    1120460381,
 			wantErr: false,
 		},
 		{
@@ -223,7 +223,7 @@ func Test_defaultHasher_floatHash(t *testing.T) {
 			args: args{
 				obj: float32(-100.4343),
 			},
-			want:    18446744073709551516,
+			want:    3267944029,
 			wantErr: false,
 		},
 		{
@@ -231,7 +231,7 @@ func Test_defaultHasher_floatHash(t *testing.T) {
 			args: args{
 				obj: float64(8589934592.338),
 			},
-			want:    8589934592,
+			want:    4755801206503420985,
 			wantErr: false,
 		},
 		{
@@ -239,7 +239,7 @@ func Test_defaultHasher_floatHash(t *testing.T) {
 			args: args{
 				obj: float64(-8589934592.4343),
 			},
-			want:    18446744065119617024,
+			want:    13979173243358247282,
 			wantErr: false,
 		},
 		{
@@ -301,7 +301,7 @@ func Test_defaultHasher_Hash(t *testing.T) {
 			args: args{
 				obj: float32(-100.4343),
 			},
-			want:    18446744073709551516,
+			want:    3267944029,
 			wantErr: false,
 		},
 		{
