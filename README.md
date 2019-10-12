@@ -14,7 +14,7 @@ This will retrive the package
 The user is free to implement the `Hasher` and/or `Equaler` interfaces, or use the default ones provided.
 
 ```
-	hm := hashmap.NewHashMap(uint64(100), DefaultHasher, DefaultEqualer)
+    hm := hashmap.NewHashMap(uint64(100), DefaultHasher, DefaultEqualer)
     hm.Put("hello", "this is an example")
     value := hm.Get("hello")
     fmt.Printf("%v\n", value)
