@@ -34,8 +34,8 @@ func (i *strMockBenchmark) Equals(obj1 interface{}, obj2 interface{}) (bool, err
 
 func strBenchmarkHashMapPut(size int, b *testing.B) {
 	m := &strMockBenchmark{}
-	hm := NewHashMap(uint64(size), m, m)
 	for n := 0; n < b.N; n++ {
+		hm := NewHashMap(uint64(size), m, m)
 		for i := 0; i < 10000; i++ {
 			if err := hm.Put(fmt.Sprint(i*3), "yeah"); err != nil {
 				b.Error(err)

@@ -6,8 +6,8 @@ import (
 )
 
 func defaultintBenchmarkHashMapPut(size int, b *testing.B) {
-	hm := NewHashMap(uint64(size), DefaultHasher, DefaultEqualer)
 	for n := 0; n < b.N; n++ {
+		hm := NewHashMap(uint64(size), DefaultHasher, DefaultEqualer)
 		for i := 0; i < 10000; i++ {
 			k := 3
 			if err := hm.Put(k, "yeah"); err != nil {
@@ -31,8 +31,8 @@ func BenchmarkDefaultIntHashMapPut1000(b *testing.B) {
 }
 
 func defaultStrBenchmarkHashMapPut(size int, b *testing.B) {
-	hm := NewHashMap(uint64(size), DefaultHasher, DefaultEqualer)
 	for n := 0; n < b.N; n++ {
+		hm := NewHashMap(uint64(size), DefaultHasher, DefaultEqualer)
 		for i := 0; i < 10000; i++ {
 			if err := hm.Put(fmt.Sprint(i*3), "yeah"); err != nil {
 				b.Error(err)

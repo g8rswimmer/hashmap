@@ -28,11 +28,11 @@ goos: darwin
 goarch: amd64
 pkg: github.com/g8rswimmer/hashmap
 
-BenchmarkIntHashMapPut10-8               	    5000	    350583 ns/op	  
-BenchmarkIntHashMapPut100-8              	    5000	    347208 ns/op	  
-BenchmarkIntHashMapPut1000-8             	    5000	    348855 ns/op	  
+BenchmarkIntHashMapPut10-8               	    3000	    372615 ns/op	   80272 B/op	   10002 allocs/op
+BenchmarkIntHashMapPut100-8              	    5000	    376295 ns/op	   82720 B/op	   10002 allocs/op
+BenchmarkIntHashMapPut1000-8             	    5000	    385656 ns/op	  104608 B/op	   10002 allocs/op
 
-BenchmarkIntHashMapGet-8                 	 5000000	       279 ns/op	  
+BenchmarkIntHashMapGet-8                 	 5000000	       303 ns/op	       0 B/op	       0 allocs/op
 ```
 ### Custom String Hasher and Equaler
 ```
@@ -40,31 +40,33 @@ goos: darwin
 goarch: amd64
 pkg: github.com/g8rswimmer/hashmap
 
-BenchmarkStringHashMapPut10-8            	      30	  46066780 ns/op	  
-BenchmarkStringHashMapPut100-8           	      50	  35299887 ns/op	  
-BenchmarkStringHashMapPut1000-8          	      50	  35104093 ns/op	  
+BenchmarkStringHashMapPut10-8            	      30	  49736044 ns/op	 1352660 B/op	   30120 allocs/op
+BenchmarkStringHashMapPut100-8           	      30	  39182395 ns/op	 1339108 B/op	   30292 allocs/op
+BenchmarkStringHashMapPut1000-8          	      30	  38746536 ns/op	 1361063 B/op	   30292 allocs/op
 
-BenchmarkStrHashMapGet-8                 	 5000000	       362 ns/op	  
+BenchmarkStrHashMapGet-8                 	 5000000	       383 ns/op	       0 B/op	       0 allocs/op
 ```
 ### Defualt Int Hasher and Equaler
 ```
 goos: darwin
 goarch: amd64
 pkg: github.com/g8rswimmer/hashmap
-BenchmarkDefaultIntHashMapPut10-8        	    2000	   1136376 ns/op	   
-BenchmarkDefaultIntHashMapPut100-8       	    2000	   1128874 ns/op	   
-BenchmarkDefaultIntHashMapPut1000-8      	    2000	   1162005 ns/op	   
 
-BenchmarkDefaultIntHashMapGet-8          	 1000000	      1529 ns/op	   
+BenchmarkDefaultIntHashMapPut10-8        	    1000	   1154594 ns/op	   80272 B/op	   10002 allocs/op
+BenchmarkDefaultIntHashMapPut100-8       	    1000	   1263153 ns/op	   82723 B/op	   10002 allocs/op
+BenchmarkDefaultIntHashMapPut1000-8      	    2000	   1208452 ns/op	  104608 B/op	   10002 allocs/op
+
+BenchmarkDefaultIntHashMapGet-8          	 1000000	      1610 ns/op	       0 B/op	       0 allocs/op
 ```
 ### Default String Hasher and Equaler
 ```
 goos: darwin
 goarch: amd64
 pkg: github.com/g8rswimmer/hashmap
-BenchmarkDefaultStringHashMapPut10-8                 100         345026505 ns/op
-BenchmarkDefaultStringHashMapPut100-8               1000          37173400 ns/op
-BenchmarkDefaultStringHashMapPut1000-8              2000          13320337 ns/op
 
-BenchmarkDefaultIntHashMapGet-8                     20000000      1490 ns/op	       
+BenchmarkDefaultStringHashMapPut10-8     	       3	 401019598 ns/op	 1180477 B/op	   30116 allocs/op
+BenchmarkDefaultStringHashMapPut100-8    	      30	  40128445 ns/op	 1139150 B/op	   30802 allocs/op
+BenchmarkDefaultStringHashMapPut1000-8   	     100	  14235148 ns/op	 1284724 B/op	   32357 allocs/op
+
+BenchmarkDefaultStrHashMapGet-8          	 1000000	      1618 ns/op	       0 B/op	       0 allocs/op
 ```
