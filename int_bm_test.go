@@ -27,7 +27,7 @@ func (i *intMockBenchmark) Equals(obj1 interface{}, obj2 interface{}) (bool, err
 	return e1 == e2, nil
 }
 
-func intBenchmarkHashMapRand(size int, b *testing.B) {
+func intBenchmarkHashMapPut(size int, b *testing.B) {
 	m := &intMockBenchmark{}
 	hm := NewHashMap(uint64(size), m, m)
 	for n := 0; n < b.N; n++ {
@@ -41,14 +41,59 @@ func intBenchmarkHashMapRand(size int, b *testing.B) {
 	}
 }
 
-func BenchmarkIntHashMap10(b *testing.B) {
-	intBenchmarkHashMapRand(10, b)
+func BenchmarkIntHashMapPut10(b *testing.B) {
+	intBenchmarkHashMapPut(10, b)
 }
 
-func BenchmarkIntHashMap100(b *testing.B) {
-	intBenchmarkHashMapRand(100, b)
+func BenchmarkIntHashMapPut100(b *testing.B) {
+	intBenchmarkHashMapPut(100, b)
 }
 
-func BenchmarkIntHashMap1000(b *testing.B) {
-	intBenchmarkHashMapRand(1000, b)
+func BenchmarkIntHashMapPut1000(b *testing.B) {
+	intBenchmarkHashMapPut(1000, b)
+}
+
+func BenchmarkIntHashMapGet(b *testing.B) {
+	testIntHashMapGets := testHashMapGets{
+		hm: &HashMap{
+			table: []entries{
+				entries{
+					entry{key: 0, obj: "a"},
+					entry{key: 10, obj: "b"},
+					entry{key: 30, obj: "c"},
+				},
+				nil,
+				entries{
+					entry{key: 12, obj: "aa"},
+					entry{key: 2, obj: "ab"},
+				},
+				entries{
+					entry{key: 33, obj: "baa"},
+					entry{key: 93, obj: "bab"},
+					entry{key: 43, obj: "bac"},
+					entry{key: 73, obj: "bad"},
+				},
+				entries{
+					entry{key: 84, obj: "cbaa"},
+				},
+			},
+			size:  5,
+			hash:  &intMockBenchmark{},
+			equal: &intMockBenchmark{},
+		},
+		keys:   []interface{}{84, 0, 43, 2, 33, 73, 10, 12, 30},
+		values: []interface{}{"cbaa", "a", "bac", "ab", "baa", "bad", "b", "aa", "c"},
+	}
+
+	for n := 0; n < b.N; n++ {
+		for idx, k := range testIntHashMapGets.keys {
+			if v, err := testIntHashMapGets.hm.Get(k); err == nil {
+				if v != testIntHashMapGets.values[idx] {
+					b.Errorf("BenchmarkIntHashMapGet = %v, want %v", v, testIntHashMapGets.values[idx])
+				}
+			} else {
+				b.Error(err)
+			}
+		}
+	}
 }

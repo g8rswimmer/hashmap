@@ -32,7 +32,7 @@ func (i *strMockBenchmark) Equals(obj1 interface{}, obj2 interface{}) (bool, err
 	return e1 == e2, nil
 }
 
-func strBenchmarkHashMapRand(size int, b *testing.B) {
+func strBenchmarkHashMapPut(size int, b *testing.B) {
 	m := &strMockBenchmark{}
 	hm := NewHashMap(uint64(size), m, m)
 	for n := 0; n < b.N; n++ {
@@ -44,14 +44,59 @@ func strBenchmarkHashMapRand(size int, b *testing.B) {
 	}
 }
 
-func BenchmarkStringHashMap10(b *testing.B) {
-	strBenchmarkHashMapRand(10, b)
+func BenchmarkStringHashMapPut10(b *testing.B) {
+	strBenchmarkHashMapPut(10, b)
 }
 
-func BenchmarkStringHashMap100(b *testing.B) {
-	strBenchmarkHashMapRand(100, b)
+func BenchmarkStringHashMapPut100(b *testing.B) {
+	strBenchmarkHashMapPut(100, b)
 }
 
-func BenchmarkStringHashMap1000(b *testing.B) {
-	strBenchmarkHashMapRand(1000, b)
+func BenchmarkStringHashMapPut1000(b *testing.B) {
+	strBenchmarkHashMapPut(1000, b)
+}
+
+func BenchmarkStrHashMapGet(b *testing.B) {
+	testStrHashMapGets := testHashMapGets{
+		hm: &HashMap{
+			table: []entries{
+				entries{
+					entry{key: "(", obj: "a"},
+					entry{key: "<", obj: "b"},
+					entry{key: "_", obj: "c"},
+				},
+				nil,
+				entries{
+					entry{key: "4", obj: "aa"},
+					entry{key: "H", obj: "ab"},
+				},
+				entries{
+					entry{key: "q", obj: "baa"},
+					entry{key: "l", obj: "bab"},
+					entry{key: "5", obj: "bac"},
+					entry{key: "N", obj: "bad"},
+				},
+				entries{
+					entry{key: "^", obj: "cbaa"},
+				},
+			},
+			size:  5,
+			hash:  &strMockBenchmark{},
+			equal: &strMockBenchmark{},
+		},
+		keys:   []interface{}{"^", "(", "5", "H", "q", "N", "<", "4", "_"},
+		values: []interface{}{"cbaa", "a", "bac", "ab", "baa", "bad", "b", "aa", "c"},
+	}
+
+	for n := 0; n < b.N; n++ {
+		for idx, k := range testStrHashMapGets.keys {
+			if v, err := testStrHashMapGets.hm.Get(k); err == nil {
+				if v != testStrHashMapGets.values[idx] {
+					b.Errorf("BenchmarkIntHashMapGet = %v, want %v", v, testStrHashMapGets.values[idx])
+				}
+			} else {
+				b.Error(err)
+			}
+		}
+	}
 }

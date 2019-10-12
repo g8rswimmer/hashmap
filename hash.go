@@ -1,6 +1,8 @@
 package hashmap
 
-import "errors"
+import (
+	"errors"
+)
 
 type entry struct {
 	key interface{}
