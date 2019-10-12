@@ -1,5 +1,7 @@
 package hashmap
 
+import "errors"
+
 type entry struct {
 	key interface{}
 	obj interface{}
@@ -7,18 +9,47 @@ type entry struct {
 
 type entries []entry
 
-type hashMap struct {
+type HashMap struct {
 	hash  Hasher
 	equal Equaler
 	table []entries
 	size  uint64
 }
 
-func (h *hashMap) Get(k interface{}) (interface{}, error) {
-	return nil, nil
+func NewHashMap(size uint64, hash Hasher, equal Equaler) *HashMap {
+	return &HashMap{
+		hash:  hash,
+		equal: equal,
+		table: make([]entries, size),
+		size:  size,
+	}
 }
 
-func (h *hashMap) Put(k, v interface{}) error {
+func (h *HashMap) Get(k interface{}) (interface{}, error) {
+	hash, err := h.hash.Hash(k)
+	if err != nil {
+		return nil, err
+	}
+	idx := int(hash % h.size)
+	list := h.table[idx]
+	switch len(list) {
+	case 0:
+		return nil, errors.New("hash map: unable to find entry")
+	default:
+		for _, en := range list {
+			eq, err := h.equal.Equals(en.key, k)
+			switch {
+			case err != nil:
+				return nil, err
+			case eq:
+				return en.obj, nil
+			}
+		}
+	}
+	return nil, errors.New("hash map: key was not found in list")
+}
+
+func (h *HashMap) Put(k, v interface{}) error {
 	hash, err := h.hash.Hash(k)
 	if err != nil {
 		return err
